@@ -9,9 +9,9 @@
 
 using namespace std;
 
-
 restraunt::restraunt()//constructor
 {
+	totalPrice = 0;
 	head = NULL;
 	current = NULL;
 }
@@ -26,6 +26,19 @@ void restraunt::createNode()//creates the nodes to link the orders together
 	else
 		current->next = newNode;
 	current = newNode;
+}
+
+string  restraunt::Color(int color = 7, string value = "")//changes the color of whats stored in value, the color change depends 
+{                                                         //on the number given to color, if no number is given the default number is 7
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+	return value;
+}
+
+void restraunt::line()//creates division
+{
+	for (int i = 0; i < 40; i++)
+		cout << "*";
+	cout << endl;
 }
 
 void restraunt::order()//takes your order, stores the values into each node created
@@ -374,6 +387,8 @@ void restraunt::receipt()//prints the order out
 
 	while (show != NULL)
 	{
+		totalPrice += show->price;//calculates the total price of all your orders
+
 		stringstream stream;                               //these 3 lines of code convert the price from double to string
 		stream << fixed << setprecision(2) << show->price; //while also maintaing its precision of 2 decimal
 		str = stream.str();
@@ -387,17 +402,22 @@ void restraunt::receipt()//prints the order out
 		cout << "\n\n";
 		show = show->next;//moves to the next node(next order)
 	}
+	
+	stringstream stream;                               //these 3 lines of code convert the price from double to string
+	stream << fixed << setprecision(2) << totalPrice; //while also maintaing its precision of 2 decimal
+	str = stream.str();
+
+	line();
+	cout << left << fixed << showpoint << setprecision(2);
+	cout << setw(33) << "Total Price : ";
+	cout << Color(2, str) << "$" << endl;//sets the text back to the green
+	Color(7, "");//sets the text back to the default color
+	line();
 }
 
 restraunt::~restraunt()//deconstructor
 {
 
-}
-
-string  restraunt::Color(int color = 7, string value = "")//changes the color of whats stored in value, the color change depends 
-{                                                         //on the number given to color, if no number is given the default number is 7
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
-	return value;
 }
 
 /*
