@@ -14,9 +14,12 @@ public:
 	void order();
 	void receipt();
 	string Color(int, string);
+	void line();
 	~restraunt();
 
 private:
+
+	double totalPrice;
 
 	typedef struct node
 	{
